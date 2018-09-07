@@ -5,7 +5,7 @@
 </p>
 
 ### Description
-This application...
+Oneminutepitch is a web based application that allows you to pitch ideas, comment on the ideas, vote on the pitch they like, and give it a downvote or upvote. The pitches are further grouped in categories, allowing users to interact in any of them.
 
 ***
 #### The app specifications 
@@ -27,7 +27,7 @@ This website will:
 * Bootstrap (for styling)
 * Postgresql (the database)
 
-View the source code at [GitHub](https://github.com/Rreuben/name of the repo)
+View the source code at [GitHub](https://github.com/Rreuben/pitch)
 
 #### Installation/Setup
 You need to have Python 3.6 installed to run this program.
@@ -36,20 +36,45 @@ You need to have Python 3.6 installed to run this program.
 
 Create a virtual enironment and activate it.
 
-`$ sudo apt-get install python3.6-venv`<br />
+`$ virtualenv -p python`<br />
 `$ source virtual/bin/acivate` and `(virtual)$ deactivate` is to deactivate the environment.
 
 In the virtual environment:
 
 `(virtual)$ pip install -r requirements.txt`<br />
 
-After running these commands, you can run the website.
+Running the app.
+
+    Prepare the environment variables.
+    
+        `(virtual)$exportDATABASE_URL='postgresqlpsycopg2://username:password@localhost/pitch'`<br/>
+        `(virtual)$ export SECRET_KEY='Your secret key'` 
+
+    Run Database Migrations.
+
+        `(virtual)$ python manage.py db init`
+        `(virtual)$ python manage.py db migrate -m "Initial migration"`
+        `(virtual)$ python manage.py db upgrade`
+
+    Run the app.
+
+        `(virtual)$ ./start.sh`
 
 #### Alternatively
 * Open browser (Google Chrome Recommended)
 * Visit the live [website](https://name of deployed app.herokuapp.com)
 
 #### Further Development
+Some features that are to come soon:
+
+    Display pitches other people have posted.
+    Pitch voting system and like and dislike function.
+    Account feature (Users can create accounts).
+    Welcoming emails upon sign ups.
+    Pitch viewing on the user's profile.
+    Commenting and feedback features.
+    Pitch posting.
+    Categories.
 
 ***
 
