@@ -68,7 +68,7 @@ Running the app.
 
 #### Alternatively
 * Open browser (Google Chrome Recommended)
-* Visit the live [website](https://name of deployed app.herokuapp.com)
+* Visit the live [website](https://pitttch.herokuapp.com)
 
 #### Further Development
 Some features that are to come soon:
