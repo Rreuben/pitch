@@ -47,18 +47,24 @@ Running the app.
 
     Prepare the environment variables.
     
-        `(virtual)$exportDATABASE_URL='postgresqlpsycopg2://username:password@localhost/pitch'`<br/>
-        `(virtual)$ export SECRET_KEY='Your secret key'` 
+        (virtual)$exportDATABASE_URL='postgresqlpsycopg2://username:password@localhost/pitch'`<br/>
+        `(virtual)$ export SECRET_KEY='Your secret key'
 
     Run Database Migrations.
 
-        `(virtual)$ python manage.py db init`
-        `(virtual)$ python manage.py db migrate -m "Initial migration"`
-        `(virtual)$ python manage.py db upgrade`
+        (virtual)$ python manage.py db init
+        (virtual)$ python manage.py db migrate -m "Initial migration"
+        (virtual)$ python manage.py db upgrade
 
     Run the app.
 
-        `(virtual)$ ./start.sh`
+        (virtual)$ touch start.sh
+
+        Put #!/usr/bin/env bash as the first line in start.sh
+        Put python3.6 manage.py server as the second line in start.sh
+
+        (virtual)$ chmod a+x start.sh
+        (virtual)$ ./start.sh
 
 #### Alternatively
 * Open browser (Google Chrome Recommended)
