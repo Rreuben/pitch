@@ -5,8 +5,8 @@
                 <ol><a href="/" id="title">Minute-Pitch</a></ol>
             </ul>
             <ul class="nav navbar-right">
-                <li><a href="{{url_for('main.profile',uname=current_user.username)}}">Profile</a></li>
                 {% if current_user.is_authenticated %}
+                <li><a href="{{url_for('main.profile',uname=current_user.username)}}">Profile</a></li>
                 <li><a href="{{url_for('auth.logout')}}">Sign out</a></li>
                 {% else %}
                 <li><a href="{{url_for('auth.login')}}">Sign in</a></li>
