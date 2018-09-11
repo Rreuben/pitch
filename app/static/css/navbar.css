@@ -1,3 +1,6 @@
-h2 {
-    text-align: center;
+#title {
+    text-decoration: none;
+}
+.navbar-right {
+    padding: 5.5px;
 }

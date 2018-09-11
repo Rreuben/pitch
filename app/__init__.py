@@ -4,9 +4,13 @@ from config import CONFIG_OPTIONS
 # Import extensions
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
 
 BOOTSTRAP = Bootstrap()
 DB = SQLAlchemy()
+LOGIN_MANAGER = LoginManager()
+LOGIN_MANAGER.session_protection = 'strong'
+LOGIN_MANAGER.login_view = 'auth.login'
 
 def create_app(config_name):
 
@@ -18,8 +22,13 @@ def create_app(config_name):
     # Initializing flask extensions
     BOOTSTRAP.init_app(app)
     DB.init_app(app)
+    LOGIN_MANAGER.init_app(app)
 
-    # Registering th blueprint
+    # Registering app blueprints
     from .main import MAIN as main_blueprint
     app.register_blueprint(main_blueprint)
+
+    from .auth import AUTH as auth_blueprint
+    app.register_blueprint(auth_blueprint, url_prefix='/authenticate')
+
     return app
