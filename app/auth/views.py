@@ -1,9 +1,12 @@
 from flask import render_template, redirect, url_for, flash, request
-from flask_login import login_user, logout_user, login_user, login_required
-from . import AUTH
-from ..models import User
-from .forms import RegistrationForm, LoginForm
+from flask_login import login_user, logout_user, login_required
+
 from .. import DB
+from ..models import User
+from ..email import mail_message
+
+from . import AUTH
+from .forms import RegistrationForm, LoginForm
 
 
 @AUTH.route('/login', methods=['GET', 'POST'])
@@ -42,6 +45,9 @@ def register():
         user = User(email=form.email.data, username=form.username.data, password=form.password.data)
         DB.session.add(user)
         DB.session.commit()
+
+        mail_message('Welcome to Minute-Pitch!', 'email/welcome_user', user.email, user=user)
+
         return redirect(url_for('auth.login'))
 
     title = 'New Account'

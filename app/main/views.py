@@ -1,8 +1,8 @@
-from flask import render_template, redirect, url_for, abort
+from flask import render_template, redirect, url_for, abort, request
 from flask_login import login_required
 
 from . import MAIN
-from .. import DB
+from .. import DB, PHOTOS
 
 from .forms import UpdateProfile
 from ..models import User, Category, Pitch, Comment
@@ -53,5 +53,21 @@ def update_profile(uname):
         DB.session.commit()
 
         return redirect(url_for('.profile', uname=user.username))
-    
+
     return render_template('profile/update.html', form=form)
+
+
+@MAIN.route('/user/<uname>/update/pic', methods=['POST'])
+@login_required
+def update_picture(uname):
+
+    user = User.query.filter_by(username=uname).first()
+
+    if 'photo' in request.files:
+        filename = PHOTOS.save(request.files['photo'])
+        path = f'photo/{filename}'
+        user.profile_pic_path = path
+
+        DB.session.commit()
+
+    return redirect(url_for('main.profile', uname=uname))
