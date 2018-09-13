@@ -1,10 +1,10 @@
 from flask import render_template, redirect, url_for, abort, request
-from flask_login import login_required
+from flask_login import login_required, current_user
 
 from . import MAIN
 from .. import DB, PHOTOS
 
-from .forms import UpdateProfile
+from .forms import UpdateProfile, PitchForm, CommentForm
 from ..models import User, Category, Pitch, Comment
 
 
@@ -15,10 +15,15 @@ def index():
     View root function that returns the index page and its content
     '''
 
-    categories = Category.query.all()
+    return render_template('index.html')
 
-    return render_template('index.html', categories=categories)
 
+@MAIN.route('/categories/pitches')
+def pitches():
+
+    pitches = Pitch.query.all()
+
+    return render_template('pitches.html', pitches=pitches)
 
 @MAIN.route('/user/<uname>')
 def profile(uname):
@@ -71,3 +76,46 @@ def update_picture(uname):
         DB.session.commit()
 
     return redirect(url_for('main.profile', uname=uname))
+
+
+@MAIN.route('/categories/pitches/new/', methods=['GET', 'POST'])
+@login_required
+def new_pitch():
+
+    form = PitchForm()
+
+    if form.validate_on_submit():
+        title = form.title.data
+        body = form.body.data
+
+        # Pitch instance
+        new_pitch = Pitch(title=title, body=body, user=current_user)
+
+        # Save Pitch
+        new_pitch.save_pitch()
+
+        return redirect(url_for('.index'))
+
+    return render_template('new_pitch.html', form=form)
+
+
+@MAIN.route('/categories/pitches/comment/new/<int:pitch_id>', methods=['GET', 'POST'])
+@login_required
+def new_comment(pitch_id):
+
+    form = CommentForm()
+    pitch = Pitch.query.filter_by(id=id).first()
+
+    if form.validate_on_submit():
+        comment = form.comment.data
+
+        # Comment instance
+        new_comment = Comment(pitch_id=pitch, comment=comment, user=current_user)
+
+        # Save comment
+        new_comment.save_comment()
+        return redirect(url_for('.index', id=pitch_id))
+
+    title = f'{pitch.title}'
+
+    return render_template('new_comment.html', title=title, form=form, pitch=pitch)

@@ -1,7 +1,7 @@
 '''Module containing classes'''
 
-from flask_login import UserMixin
 from datetime import datetime
+from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import DB, LOGIN_MANAGER
 
@@ -43,7 +43,7 @@ class User(UserMixin, DB.Model):
         return check_password_hash(self.password_hash, password)
 
     def __repr__(self):
-        return f'User {self.username}'
+        return f'{self.username}'
 
 
 class Category(DB.Model):
@@ -94,7 +94,7 @@ class Comment(DB.Model):
 
     id = DB.Column(DB.Integer, primary_key=True)
     title = DB.Column(DB.String(255))
-    comment = DB.Column(DB.String)
+    post = DB.Column(DB.String)
     time = DB.Column(DB.DateTime, default=datetime.utcnow)
 
     user_id = DB.Column(DB.Integer, DB.ForeignKey('users.id'))

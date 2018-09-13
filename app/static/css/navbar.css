@@ -1,6 +1,9 @@
 #title {
-    text-decoration: none;
+    text-decoration-line: none;
 }
 .navbar-right {
     padding: 5.5px;
+}
+.nav {
+    text-decoration: none;
 }
