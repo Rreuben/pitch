@@ -15,7 +15,9 @@ def index():
     View root function that returns the index page and its content
     '''
 
-    return render_template('index.html')
+    title = 'Minute-Pitch - Homepage'
+
+    return render_template('index.html', title=title)
 
 
 @MAIN.route('/categories/pitches')
@@ -99,22 +101,23 @@ def new_pitch():
     return render_template('new_pitch.html', form=form)
 
 
-@MAIN.route('/categories/pitches/comment/new/<int:pitch_id>', methods=['GET', 'POST'])
+@MAIN.route('/categories/pitches/comments/new/', methods=['GET', 'POST'])
 @login_required
-def new_comment(pitch_id):
+def new_comment():
 
     form = CommentForm()
     pitch = Pitch.query.filter_by(id=id).first()
 
     if form.validate_on_submit():
-        comment = form.comment.data
+        title = form.title.data
+        post = form.post.data
 
         # Comment instance
-        new_comment = Comment(pitch_id=pitch, comment=comment, user=current_user)
+        new_comment = Comment(title=title, post=post, user=current_user)
 
         # Save comment
         new_comment.save_comment()
-        return redirect(url_for('.index', id=pitch_id))
+        return redirect(url_for('.index'))
 
     title = f'{pitch.title}'
 
