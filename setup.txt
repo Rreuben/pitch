@@ -1,0 +1,76 @@
+-----------------------------------BASIC SETUP-------------------------------------
+
+After copying the template into the intended folder:
+
+
+1. DELETE, CREATE AND ACTIVATE THE VIRTUAL ENVIRONMENT
+------------------------------------------------------
+
+    rm -rdf virtual/
+    virtualenv -p python3.6 virtual
+    source virtual/bin/activate
+
+--------------------------------------------------------------------------
+
+2. UNCOMMENT THE EXTENSIONS YOU NEED TO INSTALL FROM THE REQUIREMENTS FILE
+--------------------------------------------------------------------------
+
+Then run this to install the selected ones (**USE pip3 IF YOU DONT HAVE PYENV**):
+
+    pip install -r requirements.txt
+
+**DONT FORGET TO FREEZE THE ONES YOU INSTALLED BACK INTO THE REQUIREMENTS FILE**
+
+---------------------------------------------------------------------------
+
+
+If you wish to use postgres:
+
+
+1. INSTALL THE REQUIRED EXTENSIONS FOR POSTGRES TO WORK
+
+2. EDIT THE USERNAME AND PASSWORD IN THE config.py FILE UNDER THE PARENT CLASS
+
+3. MIGRATE AND UPGRADE THE DATABASE
+-----------------------------------
+
+    pip install alembic
+    pip install flask-migrate
+
+    >>> db.drop_all()
+
+    In manage.py:
+
+        from  flask_migrate import Migrate, MigrateCommand
+        migrate = Migrate(app,db)
+        manager.add_command('db',MigrateCommand)
+
+    python3.6 manage.py db init
+    python3.6 manage.py db migrate -m "Initial Migration"
+    python3.6 manage.py db upgrade
+
+
+
+4.INSTALL ALL REQUIREMENTS
+
+pip install -r requirements.txt
+
+
+5.CREATE A START.SH FILE and add sheebang line #!/usr/bin/env bash
+
+touch start.sh
+
+
+6.PASTE THE FOLLOWING IN THE FILE
+
+python manage.py server
+
+
+7.MAKE THE FILE EXECUTABLE 
+
+chmod a+x start.sh
+
+
+8.TO RUN THE APP
+
+./start.sh

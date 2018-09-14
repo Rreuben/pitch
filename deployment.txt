@@ -1,0 +1,128 @@
+-------------------------------TO HEROKU-------------------------------
+**DO ALL OF THESE IN YOUR VIRTUAL ENVIRONMENT**
+
+
+If you are not using a database:
+
+
+1. INSTALL GUNICORN (**USE python3.6 IF YOU DON'T HAVE PYENV**)
+-------------------
+
+    python -m  pip install gunicorn
+
+----------------------------------------------------------
+
+2. INTALL THE CLI (**ONLY IF YOU HAVEN'T DONE IT BEFORE**)
+----------------------------------------------------------
+
+    pip freeze
+
+        And these should show (**IF NOT ADD THEM TO YOUR REQUIREMENTS FILE**):
+
+            click==6.7
+            dominate==2.3.1
+            Flask==0.12.2
+            Flask-Bootstrap==3.3.7.1
+            Flask-Script==2.0.5
+            Flask-WTF==0.14.2
+            gunicorn==19.7.1
+            itsdangerous==0.24
+            Jinja2==2.9.6
+            MarkupSafe==1.0
+            visitor==0.1.3
+            Werkzeug==0.12.2
+            WTForms==2.1
+            pkg-resources==0.0.0 (**REMOVE THIS LINE OF CODE FROM THE REQUIREMENTS FILE**)
+
+    pip freeze > requirements.txt (**ONLY RUN THIS IF YOU'RE ON PAR WITH THE PREVIOUS COMMAND**)
+
+--------------------
+
+3. CREATE A PROCFILE
+--------------------
+
+    touch Procfile
+
+        In your Procfile file
+            web: gunicorn manage:APP (**CONFIRM WITH YOUR manage.py THE NAME OF THE APP**)
+
+--------------------------
+
+4. CREATE A NEW HEROKU APP
+--------------------------
+
+    heroku login
+    heroku create nameofyourapp
+
+---------------------
+
+5. ADD CONFIGURATIONS
+---------------------
+
+    heroku config:set MOVIE_API_KEY=<YOUR MOVIE API>
+    heroku config:set SECRET_KEY=<YOUR SECRET KEY> (**ONLY IF YOU HAVE ONE**)
+
+---------
+
+6. DEPLOY
+---------
+
+    git add .
+    git commit -m "Deployment to heroku"
+    git push heroku master
+
+____________________________________________
+____________________________________________
+
+
+If you are using a database (i.e Postgres):
+
+
+1. CONFIGURE VARIABLES
+----------------------
+
+    heroku config:set MAIL_USERNAME=<YOUR EMAIL ADDRESS>
+    heroku config:set MAIL_PASSWORD=<YOUR EMAIL PASSWORD>
+
+------------------
+
+2. SET UP POSTGRES
+------------------
+
+    In your Procfile file:
+
+        heroku addons:create heroku-postgresql
+    __________________________________________
+
+    In your config.py file:
+
+        class ProdConfig(Config):
+            SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
+    __________________________________________
+
+----------------------------
+
+3. UPDATE APP FOR PRODUCTION
+----------------------------
+
+    In your manage.py:
+
+        app = create_app('production')
+
+---------------------------
+
+4. UPDATE REQUIREMENTS FILE
+---------------------------
+
+    pip freeze > requirements.txt
+
+**REMEMBER TO REMOVE pkg-resources==0.0.0 LINE TO PREVENT ERRORS WHEN DEPLOYING**
+
+--------------------
+
+5. PUSHING TO HEROKU
+--------------------
+
+    git push heroku master
+    heroku run python3.6 manage.py db upgrade
+
