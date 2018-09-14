@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, abort, request
+from flask import render_template, redirect, url_for, abort, request, flash
 from flask_login import login_required, current_user
 
 from . import MAIN
@@ -122,13 +122,12 @@ def new_comment(id):
     pitch = Pitch.query.filter_by(id=id).first()
 
     if form.validate_on_submit():
-        post = form.post.data
+        post = Comment(post=form.post.data)
 
-        # Comment instance
-        new_comment = Comment(post=post, user=current_user)
+        DB.session.add(post)
+        DB.session.commit()
 
-        # Save comment
-        new_comment.save_comment()
+        flash('Your comment has been created!')
         return redirect(url_for('.index'))
 
     title = f'{pitch.title}'

@@ -7,7 +7,8 @@
 
             {% if comment %}
                 <ul class="reviews-list">
-                    {{ macro.displayComments(comments) }}
+                    {{macro.displayComments(comment_list)}}
+                    {{comment.post}}
                 </ul>
             {% else %}
                 <h4>This pitch has no comments</h4>
