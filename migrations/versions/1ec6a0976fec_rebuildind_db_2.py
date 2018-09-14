@@ -1,8 +1,8 @@
-"""create new database
+"""Rebuildind DB #2
 
-Revision ID: f0198b56cdd5
+Revision ID: 1ec6a0976fec
 Revises: 
-Create Date: 2018-09-11 11:12:38.241508
+Create Date: 2018-09-13 13:01:09.100669
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'f0198b56cdd5'
+revision = '1ec6a0976fec'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -47,7 +47,7 @@ def upgrade():
     op.create_table('comments',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('title', sa.String(length=255), nullable=True),
-    sa.Column('comment', sa.String(), nullable=True),
+    sa.Column('post', sa.String(), nullable=True),
     sa.Column('time', sa.DateTime(), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.Column('pitch_id', sa.Integer(), nullable=True),

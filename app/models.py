@@ -93,7 +93,6 @@ class Comment(DB.Model):
     __tablename__ = 'comments'
 
     id = DB.Column(DB.Integer, primary_key=True)
-    title = DB.Column(DB.String(255))
     post = DB.Column(DB.String)
     time = DB.Column(DB.DateTime, default=datetime.utcnow)
 
@@ -104,3 +103,9 @@ class Comment(DB.Model):
     def save_comment(self):
         DB.session.add(self)
         DB.session.commit()
+
+    @classmethod
+    def get_comments(cls, id):
+        comments = Comment.query.filter_by(pitch_id=id).all()
+
+        return comments

@@ -20,13 +20,6 @@ def index():
     return render_template('index.html', title=title)
 
 
-@MAIN.route('/categories/pitches')
-def pitches():
-
-    pitches = Pitch.query.all()
-
-    return render_template('pitches.html', pitches=pitches)
-
 @MAIN.route('/user/<uname>')
 def profile(uname):
 
@@ -84,6 +77,10 @@ def update_picture(uname):
 @login_required
 def new_pitch():
 
+    '''
+    Function to render a form and get data from that form
+    '''
+
     form = PitchForm()
 
     if form.validate_on_submit():
@@ -101,19 +98,34 @@ def new_pitch():
     return render_template('new_pitch.html', form=form)
 
 
-@MAIN.route('/categories/pitches/comments/new/', methods=['GET', 'POST'])
+@MAIN.route('/categories/pitches')
+def pitches():
+
+    '''
+    Function to display all the pitches added
+    '''
+
+    pitches = Pitch.query.all()
+
+    return render_template('pitches.html', pitches=pitches)
+
+
+@MAIN.route('/categories/pitches/comments/new/<int:id>', methods=['GET', 'POST'])
 @login_required
-def new_comment():
+def new_comment(id):
+
+    '''
+    Function to render a form and get data from that form
+    '''
 
     form = CommentForm()
     pitch = Pitch.query.filter_by(id=id).first()
 
     if form.validate_on_submit():
-        title = form.title.data
         post = form.post.data
 
         # Comment instance
-        new_comment = Comment(title=title, post=post, user=current_user)
+        new_comment = Comment(post=post, user=current_user)
 
         # Save comment
         new_comment.save_comment()
@@ -122,3 +134,17 @@ def new_comment():
     title = f'{pitch.title}'
 
     return render_template('new_comment.html', title=title, form=form, pitch=pitch)
+
+
+@MAIN.route('/categories/pitches/comments/<int:id>')
+def comments(id):
+
+    '''
+    Function that displays all comments for a pitch
+    '''
+
+    pitch = Pitch.query.get(id)
+    comment = Comment.get_comments(pitch.id)
+    title = f'{pitch.title}'
+
+    return render_template('comments.html', title=title, pitch=pitch, comment=comment)

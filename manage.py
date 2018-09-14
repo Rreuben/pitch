@@ -4,7 +4,7 @@ from app import create_app, DB
 from app.models import User, Category, Pitch, Comment
 
 # instances for the create_app
-APP = create_app('development')
+APP = create_app('production')
 
 
 MANAGER = Manager(APP)

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% import 'macros.html' as macro %}
+
+{% block content %}
+    <div class="container">
+        <div class="panel reviews">
+
+            {% if comment %}
+                <ul class="reviews-list">
+                    {{ macro.displayComments(comments) }}
+                </ul>
+            {% else %}
+                <h4>This pitch has no comments</h4>
+                <br>
+                <a href="/categories/pitches/comments/new/{{pitch.id}}" id="comment-icon" class="btn btn-outline-secondary"><i class="fa fa-plus"></i> Add Comment</a>
+            {% endif %}
+
+        </div>
+    </div>
+{% endblock %}

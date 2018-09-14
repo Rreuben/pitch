@@ -11,3 +11,7 @@ h1 {
 .card-body a:hover {
     color: whitesmoke;
 }
+#comment-icon {
+    float: left; 
+    font-size: 10px;
+}
