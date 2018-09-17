@@ -84,5 +84,5 @@ Apparently heroku cannot pick up cdn links, so if you open this project you migh
 ***
 
 <p align = "center">
-    <a href = "https://github.com/Rreuben/path_to_your_licence_file">LICENSE</a>
+    <a href = "https://github.com/Rreuben/pitch/blob/master/LICENSE">LICENSE</a>
 </p>
