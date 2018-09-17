@@ -73,14 +73,13 @@ Running the app.
 #### Further Development
 Some features that are to come soon:
 
-    Display pitches other people have posted.
     Pitch voting system and like and dislike function.
-    Account feature (Users can create accounts).
-    Welcoming emails upon sign ups.
     Pitch viewing on the user's profile.
     Commenting and feedback features.
-    Pitch posting.
     Categories.
+    
+#### Known Bugs
+Apparently heroku cannot pick up cdn links, so if you open this project you might see no navbar. However, you can still sign in but there is no button for signing out. 
 
 ***
 
